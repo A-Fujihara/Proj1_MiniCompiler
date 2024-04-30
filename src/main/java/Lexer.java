@@ -130,11 +130,25 @@ public class Lexer {
                 return new Token(TokenType.Op_add, "+", this.line, this.pos);
             case '-':
                 return new Token(TokenType.Op_subtract, "-", this.line, this.pos);
-//            case '-':
-//
-//                if (this.pos - 1 == '\u0000' && this.pos + 1 <= Integer.MAX_VALUE) {
-//                    return new Token(TokenType.Op_subtract, "-", this.line, this.pos);
-//                }
+            case '!':
+                return new Token(TokenType.Op_not, "!", this.line, this.pos);
+            case '<':
+                return new Token(TokenType.Op_less, "<", this.line, this.pos);
+            case '≤':
+                return new Token(TokenType.Op_lessequal, "≤", this.line, this.pos);
+            case '>':
+                return new Token(TokenType.Op_greater, ">", this.line, this.pos);
+            case '≥':
+                return new Token(TokenType.Op_greaterequal, "≥", this.line, this.pos);
+            case '=' + '=':
+                return new Token(TokenType.Op_equal, "=" + "=", this.line, this.pos);
+            case '≠':
+                return new Token(TokenType.Op_notequal, "≠", this.line, this.pos);
+            case '=':
+                return new Token(TokenType.Op_assign, "=", this.line, this.pos);
+            case '∧':
+                return new Token(TokenType.Op_and, "∧", this.line, this.pos);
+
 
             default:
                 return identifier_or_integer(line, pos);
