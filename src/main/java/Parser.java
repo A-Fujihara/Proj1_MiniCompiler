@@ -169,7 +169,7 @@ class Parser {
 
         return t;
     }
-    //Will need addtional logic here
+    //Will need additional logic here
     Node parse() {
         Node t = null;
         getNextToken();

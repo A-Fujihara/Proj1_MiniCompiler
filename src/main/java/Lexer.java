@@ -85,7 +85,11 @@ public class Lexer {
         char c = getNextChar(); // skip opening quote
         int n = (int)c;
         // code here
-        return new Token(TokenType.Integer, "" + n, line, pos);
+        if (getNextChar() == '\'') {
+            return new Token(TokenType.Integer, "" + n, line, pos);
+        } else {
+            return null;
+        }
     }
     Token string_lit(char start, int line, int pos) { // handle string literals
         String result = "";
@@ -113,10 +117,27 @@ public class Lexer {
         // switch statement on character for all forms of tokens with return to follow.... one example left for you
 
         switch (this.chr) {
-            case '\u0000': return new Token(TokenType.End_of_input, "", this.line, this.pos);
+            case '\u0000':
+                return new Token(TokenType.End_of_input, "", this.line, this.pos);
             // remaining case statements
+            case '*':
+                return new Token(TokenType.Op_multiply, "*", this.line, this.pos);
+            case '/':
+                return new Token(TokenType.Op_divide, "/", this.line, this.pos);
+            case '%':
+                return new Token(TokenType.Op_mod, "%", this.line, this.pos);
+            case '+':
+                return new Token(TokenType.Op_add, "+", this.line, this.pos);
+            case '-':
+                return new Token(TokenType.Op_subtract, "-", this.line, this.pos);
+//            case '-':
+//
+//                if (this.pos - 1 == '\u0000' && this.pos + 1 <= Integer.MAX_VALUE) {
+//                    return new Token(TokenType.Op_subtract, "-", this.line, this.pos);
+//                }
 
-            default: return identifier_or_integer(line, pos);
+            default:
+                return identifier_or_integer(line, pos);
         }
     }
 
