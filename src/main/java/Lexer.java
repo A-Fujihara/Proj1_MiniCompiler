@@ -81,20 +81,27 @@ public class Lexer {
         }
         return new Token(ifno, "", line, pos);
     }
+    //TODO: Do more research regarding second return
     Token char_lit(int line, int pos) { // handle character literals
+        //this.line = line;
+        //this.pos = pos;
         char c = getNextChar(); // skip opening quote
         int n = (int)c;
         // code here
         if (getNextChar() == '\'') {
             return new Token(TokenType.Integer, "" + n, line, pos);
         } else {
-            return null;
+            return new Token(TokenType.End_of_input, "Invalid char literal", line, pos);
         }
     }
     Token string_lit(char start, int line, int pos) { // handle string literals
         String result = "";
         // code here
-        return new Token(TokenType.String, result, line, pos);
+        if (getNextChar() == '"') {
+            return new Token(TokenType.String, result, line, pos);
+        } else {
+            return new Token(TokenType.End_of_input, "Invalid String literal", line, pos);
+        }
     }
     Token div_or_comment(int line, int pos) { // handle division or comments
         // code here
@@ -140,14 +147,28 @@ public class Lexer {
                 return new Token(TokenType.Op_greater, ">", this.line, this.pos);
             case '≥':
                 return new Token(TokenType.Op_greaterequal, "≥", this.line, this.pos);
-            case '=' + '=':
-                return new Token(TokenType.Op_equal, "=" + "=", this.line, this.pos);
+            case '⩵':
+                return new Token(TokenType.Op_equal, "⩵", this.line, this.pos);
             case '≠':
                 return new Token(TokenType.Op_notequal, "≠", this.line, this.pos);
             case '=':
                 return new Token(TokenType.Op_assign, "=", this.line, this.pos);
             case '∧':
                 return new Token(TokenType.Op_and, "∧", this.line, this.pos);
+            case '∨':
+                return new Token(TokenType.Op_or, "∨", this.line, this.pos );
+            case '(':
+                return new Token(TokenType.LeftParen, "(", this.line, this.pos);
+            case ')':
+                return new Token(TokenType.RightParen, ")", this.line, this.pos);
+            case '{':
+                return new Token(TokenType.LeftBrace, "{", this.line, this.pos);
+            case '}':
+                return new Token(TokenType.RightBrace, "}", this.line, this.pos);
+            case ';':
+                return new Token(TokenType.Semicolon, ";", this.line, this.pos);
+            case ',':
+                return new Token(TokenType.Comma, ",", this.line, this.pos);
 
 
             default:
