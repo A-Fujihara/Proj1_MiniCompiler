@@ -87,6 +87,7 @@ public class Lexer {
         //this.pos = pos;
         char c = getNextChar(); // skip opening quote
         int n = (int)c;
+
         // code here
         if (getNextChar() == '\'') {
             return new Token(TokenType.Integer, "" + n, line, pos);
@@ -94,9 +95,13 @@ public class Lexer {
             return new Token(TokenType.End_of_input, "Invalid char literal", line, pos);
         }
     }
+    //TODO: Continue fleshing out logic on while loop
     Token string_lit(char start, int line, int pos) { // handle string literals
         String result = "";
         // code here
+        while (getNextChar() != '"') {
+            result += getNextChar();
+        }
         if (getNextChar() == '"') {
             return new Token(TokenType.String, result, line, pos);
         } else {
@@ -105,6 +110,7 @@ public class Lexer {
     }
     Token div_or_comment(int line, int pos) { // handle division or comments
         // code here
+
         return getToken();
     }
     Token identifier_or_integer(int line, int pos) { // handle identifiers and integers
@@ -141,21 +147,21 @@ public class Lexer {
                 return new Token(TokenType.Op_not, "!", this.line, this.pos);
             case '<':
                 return new Token(TokenType.Op_less, "<", this.line, this.pos);
-            case '≤':
+            case '\u2264':
                 return new Token(TokenType.Op_lessequal, "≤", this.line, this.pos);
             case '>':
                 return new Token(TokenType.Op_greater, ">", this.line, this.pos);
-            case '≥':
+            case '\u2265':
                 return new Token(TokenType.Op_greaterequal, "≥", this.line, this.pos);
-            case '⩵':
+            case '\u003D':
                 return new Token(TokenType.Op_equal, "⩵", this.line, this.pos);
-            case '≠':
+            case '\u2260':
                 return new Token(TokenType.Op_notequal, "≠", this.line, this.pos);
-            case '=':
-                return new Token(TokenType.Op_assign, "=", this.line, this.pos);
-            case '∧':
+//            case '=':
+//                return new Token(TokenType.Op_assign, "=", this.line, this.pos);
+            case '\u2229':
                 return new Token(TokenType.Op_and, "∧", this.line, this.pos);
-            case '∨':
+            case '\u222A':
                 return new Token(TokenType.Op_or, "∨", this.line, this.pos );
             case '(':
                 return new Token(TokenType.LeftParen, "(", this.line, this.pos);
