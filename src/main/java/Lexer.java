@@ -11,7 +11,7 @@ public class Lexer {
     private int pos;
     private int position;
     private char chr;
-    private String s;
+    String s;
 
     Map<String, TokenType> keywords = new HashMap<>();
 
@@ -20,6 +20,23 @@ public class Lexer {
         public String value;
         public int line;
         public int pos;
+
+        public TokenType getTokentype() {
+            return tokentype;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public int getLine() {
+            return line;
+        }
+
+        public int getPos() {
+            return pos;
+        }
+
         Token(TokenType token, String value, int line, int pos) {
             this.tokentype = token; this.value = value; this.line = line; this.pos = pos;
         }
@@ -83,40 +100,101 @@ public class Lexer {
     }
     //TODO: Do more research regarding second return
     Token char_lit(int line, int pos) { // handle character literals
-        //this.line = line;
-        //this.pos = pos;
-        char c = getNextChar(); // skip opening quote
-        int n = (int)c;
+        getNextChar();
 
-        // code here
-        if (getNextChar() == '\'') {
-            return new Token(TokenType.Integer, "" + n, line, pos);
-        } else {
-            return new Token(TokenType.End_of_input, "Invalid char literal", line, pos);
+        // Check if the next character is a valid character literal (any character except quote)
+        if (!Character.isISOControl(chr) && chr != '\'') {
+            char c = chr; // Capture the character
+            getNextChar(); // Skip the character itself
+
+            // Check for closing quote
+            if (chr == '\'') {
+                return new Token(TokenType.Integer, String.valueOf(c), line, pos);
+            } else {
+                error(line, pos, "Invalid char literal");
+                // Handle error: unmatched closing quote, could return an error token here
+            }
+        }
+
+//        } else {
+//            error(line, pos, "Invalid character, possibly ISO character");
+//            // Handle error: invalid character (control character or quote), could return an error token here
+//        }
+
+
+
+
+        // If we reach here, it's an error condition (handled above)
+        return new Token(TokenType.End_of_input, "", line, pos); // Placeholder for error handling
+        //return new Token(TokenType.Integer, "" + n, line, pos);
+    }
+
+//        this.line = line;
+//        //this.pos = pos;
+//        char c = getNextChar(); // skip opening quote
+//        int n = (int)c;
+//
+//        // code here
+//        if (getNextChar() == '\'') {
+//            return new Token(TokenType.Integer, "" + n, line, pos);
+//        } else {
+//            return new Token(TokenType.End_of_input, "Integer", line, pos);
+//        }
+//TODO: Continue fleshing out logic on while loop
+Token string_lit(char start, int line, int pos) { // handle string literals
+    StringBuilder result = new StringBuilder();
+    // code here
+
+    char nextChar = getNextChar();
+    //result.append(start);
+
+    while (nextChar != start ) {
+        result.append(nextChar);
+        nextChar = getNextChar();
+        if (nextChar == '"' || nextChar == '\'') {
+            return new Token(TokenType.String, result.toString(), line, pos);
         }
     }
-    //TODO: Continue fleshing out logic on while loop
-    Token string_lit(char start, int line, int pos) { // handle string literals
-        String result = "";
-        // code here
-        while (getNextChar() != '"') {
-            result += getNextChar();
-        }
-        if (getNextChar() == '"') {
-            return new Token(TokenType.String, result, line, pos);
-        } else {
-            return new Token(TokenType.End_of_input, "Invalid String literal", line, pos);
-        }
-    }
+
+    return new Token(TokenType.End_of_input, "Invalid String literal", line, pos);
+}
+
     Token div_or_comment(int line, int pos) { // handle division or comments
-        // code here
+        char[] integers = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
+        StringBuilder sb = new StringBuilder();
 
-        return getToken();
+        for (char ints : integers) {
+            if (getNextChar() == ints) {
+                char nextChar = getNextChar();
+                if (nextChar == '\\') {
+                    char nextNextChar = getNextChar();
+                    sb.append(ints);
+                    sb.append(nextChar);
+                    if (nextNextChar == ints) {
+                        sb.append(nextNextChar);
+                        return new Token(TokenType.Op_divide, "", line, pos);
+                    }
+                } else if (nextChar == '*') {
+                    while (true) {
+                        char nextNextChar = getNextChar();
+                        if (nextNextChar == '*' && getNextChar() == '\\') {
+                            break;
+                        }
+                    }
+                }
+
+            }
+        }
+//
+//
+//
+            return getToken();
     }
     Token identifier_or_integer(int line, int pos) { // handle identifiers and integers
         boolean is_number = true;
         String text = "";
         // code here
+        getNextChar();
         return new Token(TokenType.Identifier, text, line, pos);
     }
     Token getToken() {
@@ -131,50 +209,70 @@ public class Lexer {
 
         switch (this.chr) {
             case '\u0000':
-                return new Token(TokenType.End_of_input, "", this.line, this.pos);
+                return new Token(TokenType.End_of_input, "", line, pos);
             // remaining case statements
             case '*':
-                return new Token(TokenType.Op_multiply, "*", this.line, this.pos);
+                getNextChar();
+                return new Token(TokenType.Op_multiply, "*", line, pos);
             case '/':
-                return new Token(TokenType.Op_divide, "/", this.line, this.pos);
+                getNextChar();
+                return new Token(TokenType.Op_divide, "/", line, pos);
             case '%':
-                return new Token(TokenType.Op_mod, "%", this.line, this.pos);
+                getNextChar();
+                return new Token(TokenType.Op_mod, "%", line, pos);
             case '+':
-                return new Token(TokenType.Op_add, "+", this.line, this.pos);
+                getNextChar();
+                return new Token(TokenType.Op_add, "+", line, pos);
             case '-':
-                return new Token(TokenType.Op_subtract, "-", this.line, this.pos);
+                getNextChar();
+                return new Token(TokenType.Op_subtract, "-", line, pos);
             case '!':
-                return new Token(TokenType.Op_not, "!", this.line, this.pos);
+                getNextChar();
+                return new Token(TokenType.Op_not, "!", line, pos);
             case '<':
-                return new Token(TokenType.Op_less, "<", this.line, this.pos);
+                getNextChar();
+                return new Token(TokenType.Op_less, "<", line, pos);
             case '\u2264':
-                return new Token(TokenType.Op_lessequal, "≤", this.line, this.pos);
+                getNextChar();
+                return new Token(TokenType.Op_lessequal, "≤", line, pos);
             case '>':
-                return new Token(TokenType.Op_greater, ">", this.line, this.pos);
+                getNextChar();
+                return new Token(TokenType.Op_greater, ">", line, pos);
             case '\u2265':
-                return new Token(TokenType.Op_greaterequal, "≥", this.line, this.pos);
+                getNextChar();
+                return new Token(TokenType.Op_greaterequal, "≥", line, pos);
             case '\u003D':
-                return new Token(TokenType.Op_equal, "⩵", this.line, this.pos);
+                getNextChar();
+                return new Token(TokenType.Op_equal, "⩵", line, pos);
             case '\u2260':
-                return new Token(TokenType.Op_notequal, "≠", this.line, this.pos);
+                getNextChar();
+                return new Token(TokenType.Op_notequal, "≠", line, pos);
 //            case '=':
 //                return new Token(TokenType.Op_assign, "=", this.line, this.pos);
             case '\u2229':
-                return new Token(TokenType.Op_and, "∧", this.line, this.pos);
+                getNextChar();
+                return new Token(TokenType.Op_and, "∧", line, pos);
             case '\u222A':
-                return new Token(TokenType.Op_or, "∨", this.line, this.pos );
+                getNextChar();
+                return new Token(TokenType.Op_or, "∨", line, pos);
             case '(':
-                return new Token(TokenType.LeftParen, "(", this.line, this.pos);
+                getNextChar();
+                return new Token(TokenType.LeftParen, "(", line, pos);
             case ')':
-                return new Token(TokenType.RightParen, ")", this.line, this.pos);
+                getNextChar();
+                return new Token(TokenType.RightParen, ")", line, pos);
             case '{':
-                return new Token(TokenType.LeftBrace, "{", this.line, this.pos);
+                getNextChar();
+                return new Token(TokenType.LeftBrace, "{", line, pos);
             case '}':
-                return new Token(TokenType.RightBrace, "}", this.line, this.pos);
+                getNextChar();
+                return new Token(TokenType.RightBrace, "}", line, pos);
             case ';':
-                return new Token(TokenType.Semicolon, ";", this.line, this.pos);
+                getNextChar();
+                return new Token(TokenType.Semicolon, ";", line, pos);
             case ',':
-                return new Token(TokenType.Comma, ",", this.line, this.pos);
+                getNextChar();
+                return new Token(TokenType.Comma, ",", line, pos);
 
 
             default:
@@ -220,6 +318,15 @@ public class Lexer {
             throw new RuntimeException(e);
         }
     }
+
+//    public char getChr() {
+//        Lexer myLexer = new Lexer()
+//        return chr;
+//    }
+
+//    public String getS() {
+//        return s;
+//    }
 
     public static void main(String[] args) {
         if (1==1) {
