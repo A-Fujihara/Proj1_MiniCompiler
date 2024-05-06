@@ -1,69 +1,28 @@
     1      1 Identifier      
-    1      2 Identifier      
-    1      3 Identifier      
-    1      4 Identifier      
-    1      5 Identifier      
-    1      7 Op_equal       
-    1      9 Identifier      
+    1      7 Op_assign      
+    1      9 Integer              
     1     10 Semicolon      
     2      1 Identifier      
-    2      2 Identifier      
-    2      3 Identifier      
-    2      4 Identifier      
-    2      5 Identifier      
     2      7 LeftParen      
     2      8 Identifier      
-    2      9 Identifier      
-    2     10 Identifier      
-    2     11 Identifier      
-    2     12 Identifier      
     2     14 Op_less        
-    2     16 Identifier      
-    2     17 Identifier      
+    2     16 Integer              
     2     18 RightParen     
     2     20 LeftBrace      
     3      4 Identifier      
-    3      5 Identifier      
-    3      6 Identifier      
-    3      7 Identifier      
-    3      8 Identifier      
     3      9 LeftParen      
-    3     10 Identifier      
-    3     11 Identifier      
-    3     12 Identifier      
-    3     13 Identifier      
-    3     14 Identifier      
-    3     15 Identifier      
-    3     17 Identifier      
-    3     18 Identifier      
-    3     19 Identifier      
-    3     21 Identifier      
+    3     10 String          "count is: "
     3     22 Comma          
     3     24 Identifier      
-    3     25 Identifier      
-    3     26 Identifier      
-    3     27 Identifier      
-    3     28 Identifier      
     3     29 Comma          
-    3     31 Identifier      
-    3     32 Identifier      
-    3     33 Identifier      
-    3     34 Identifier      
+    3     31 String          "\n"
     3     35 RightParen     
     3     36 Semicolon      
     4      4 Identifier      
-    4      5 Identifier      
-    4      6 Identifier      
-    4      7 Identifier      
-    4      8 Identifier      
-    4     10 Op_equal       
+    4     10 Op_assign      
     4     12 Identifier      
-    4     13 Identifier      
-    4     14 Identifier      
-    4     15 Identifier      
-    4     16 Identifier      
     4     18 Op_add         
-    4     20 Identifier      
+    4     20 Integer              
     4     21 Semicolon      
     5      1 RightBrace     
     6      1 End_of_input   

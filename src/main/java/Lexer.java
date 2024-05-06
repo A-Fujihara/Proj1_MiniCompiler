@@ -63,7 +63,7 @@ public class Lexer {
         Op_negate, Op_not, Op_less, Op_lessequal, Op_greater, Op_greaterequal,
         Op_equal, Op_notequal, Op_assign, Op_and, Op_or, Keyword_if,
         Keyword_else, Keyword_while, Keyword_print, Keyword_putc, LeftParen, RightParen,
-        LeftBrace, RightBrace, Semicolon, Comma, Identifier, Integer, String
+        LeftBrace, RightBrace, Semicolon, Comma, Identifier, Integer, String,
     }
 
     static void error(int line, int pos, String msg) {
@@ -102,7 +102,6 @@ public class Lexer {
     Token char_lit(int line, int pos) { // handle character literals
         getNextChar();
 
-        // Check if the next character is a valid character literal (any character except quote)
         if (!Character.isISOControl(chr) && chr != '\'') {
             char c = chr; // Capture the character
             getNextChar(); // Skip the character itself
@@ -110,36 +109,17 @@ public class Lexer {
             // Check for closing quote
             if (chr == '\'') {
                 return new Token(TokenType.Integer, String.valueOf(c), line, pos);
-            } else {
-                error(line, pos, "Invalid char literal");
-                // Handle error: unmatched closing quote, could return an error token here
+//            } else {
+//                error(line, pos, "Invalid char literal");
+//                // Handle error: unmatched closing quote, could return an error token here
             }
         }
 
-//        } else {
-//            error(line, pos, "Invalid character, possibly ISO character");
-//            // Handle error: invalid character (control character or quote), could return an error token here
-//        }
 
-
-
-
-        // If we reach here, it's an error condition (handled above)
         return new Token(TokenType.End_of_input, "", line, pos); // Placeholder for error handling
-        //return new Token(TokenType.Integer, "" + n, line, pos);
     }
 
-//        this.line = line;
-//        //this.pos = pos;
-//        char c = getNextChar(); // skip opening quote
-//        int n = (int)c;
-//
-//        // code here
-//        if (getNextChar() == '\'') {
-//            return new Token(TokenType.Integer, "" + n, line, pos);
-//        } else {
-//            return new Token(TokenType.End_of_input, "Integer", line, pos);
-//        }
+
 //TODO: Continue fleshing out logic on while loop
 Token string_lit(char start, int line, int pos) { // handle string literals
     StringBuilder result = new StringBuilder();
@@ -151,12 +131,12 @@ Token string_lit(char start, int line, int pos) { // handle string literals
     while (nextChar != start ) {
         result.append(nextChar);
         nextChar = getNextChar();
-        if (nextChar == '"' || nextChar == '\'') {
-            return new Token(TokenType.String, result.toString(), line, pos);
-        }
+//        if (nextChar == '"') {
+//        }
     }
 
-    return new Token(TokenType.End_of_input, "Invalid String literal", line, pos);
+    getNextChar();
+    return new Token(TokenType.String, result.toString(), line, pos);
 }
 
     Token div_or_comment(int line, int pos) { // handle division or comments
@@ -182,21 +162,38 @@ Token string_lit(char start, int line, int pos) { // handle string literals
                         }
                     }
                 }
-
             }
         }
-//
-//
-//
             return getToken();
     }
+
     Token identifier_or_integer(int line, int pos) { // handle identifiers and integers
         boolean is_number = true;
         String text = "";
         // code here
-        getNextChar();
-        return new Token(TokenType.Identifier, text, line, pos);
+        StringBuilder result = new StringBuilder();
+
+        if (Character.isDigit(chr)) {
+
+            while (Character.isDigit(chr)) {
+                result.append(chr);
+                getNextChar();
+
+            }
+            return new Token(TokenType.Integer,  "", line, pos);
+        } else if (Character.isLetter(chr)) {
+            while (Character.isLetter(chr) || Character.isDigit(chr)) {
+                result.append(chr);
+                getNextChar();
+            }
+            return new Token(TokenType.Identifier, "", line, pos);
+        } else {
+            return new Token(TokenType.End_of_input, "Invalid String literal", line, pos);
+        }
     }
+
+
+
     Token getToken() {
         int line, pos;
         while (Character.isWhitespace(this.chr)) {
@@ -243,12 +240,18 @@ Token string_lit(char start, int line, int pos) { // handle string literals
                 return new Token(TokenType.Op_greaterequal, "≥", line, pos);
             case '\u003D':
                 getNextChar();
-                return new Token(TokenType.Op_equal, "⩵", line, pos);
+                TokenType tokenType = follow('=', TokenType.Op_equal, TokenType.Op_assign, line, pos).tokentype;
+                if (tokenType == TokenType.Op_equal){
+                    return new Token(tokenType, "==", line, pos);
+                }else {
+                    return new Token(tokenType, "=", line, pos);
+                }
+
+
+
             case '\u2260':
                 getNextChar();
                 return new Token(TokenType.Op_notequal, "≠", line, pos);
-//            case '=':
-//                return new Token(TokenType.Op_assign, "=", this.line, this.pos);
             case '\u2229':
                 getNextChar();
                 return new Token(TokenType.Op_and, "∧", line, pos);
@@ -273,6 +276,13 @@ Token string_lit(char start, int line, int pos) { // handle string literals
             case ',':
                 getNextChar();
                 return new Token(TokenType.Comma, ",", line, pos);
+            case '"':
+                return string_lit('"', line, pos);
+            case '\'':
+                return char_lit(line, pos);
+
+
+
 
 
             default:
@@ -318,15 +328,6 @@ Token string_lit(char start, int line, int pos) { // handle string literals
             throw new RuntimeException(e);
         }
     }
-
-//    public char getChr() {
-//        Lexer myLexer = new Lexer()
-//        return chr;
-//    }
-
-//    public String getS() {
-//        return s;
-//    }
 
     public static void main(String[] args) {
         if (1==1) {

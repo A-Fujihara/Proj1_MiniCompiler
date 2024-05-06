@@ -45,23 +45,7 @@ class LexerTest {
     }
     @Test
     void error() {
-//        int line = 10;
-//        int pos = 5;
-//        String errorMessage = "An error occurred";
 //
-//        // Redirect System.out to capture the output
-//        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-//        System.setOut(new PrintStream(outContent));
-//
-//        // Call the method that could potentially trigger an error
-//        char_lit();
-//
-//        // Verify that the error message is logged correctly
-//        String expectedOutput = String.format("%s in line %d, pos %d\n", errorMessage, line, pos);
-//        assertEquals(expectedOutput, outContent.toString());
-//
-//        // Reset System.out
-//        System.setOut(System.out);
     }
 
     @Test
