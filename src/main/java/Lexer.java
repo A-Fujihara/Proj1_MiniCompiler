@@ -266,8 +266,7 @@ public class Lexer {
      * @param pos  - The position within the line
      * @return - A Token
      */
-    Token identifier_or_integer(int line, int pos) { // handle identifiers and integers
-        boolean is_number = true;
+    Token identifier_or_integer(int line, int pos) {
         // code here
         String result = "";
 
@@ -464,6 +463,7 @@ public class Lexer {
                 throw new RuntimeException(e);
             }
 
+            //this file writes to hello3.lex
         } else if (fileName == "src/main/resources/hello3.lex") {
             try {
                 FileWriter myWriter = new FileWriter("src/main/resources/hello3.lex");
@@ -473,6 +473,8 @@ public class Lexer {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
+            //this file writes to hello4.lex
         } else if (fileName == "src/main/resources/hello4.lex") {
             try {
                 FileWriter myWriter = new FileWriter("src/main/resources/hello4.lex");
@@ -483,7 +485,7 @@ public class Lexer {
                 throw new RuntimeException(e);
             }
         } else {
-            //this file writes to hello3.lex
+            //this file writes to hello5.lex
             try {
                 FileWriter myWriter = new FileWriter("src/main/resources/hello5.lex");
                 myWriter.write(result);

@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a7ac25b6-265d-43ed-8230-0c6749f7127e" name="Changes" comment="wrote test for char_lit(), and string_lit()" />
+    <list default="true" id="a7ac25b6-265d-43ed-8230-0c6749f7127e" name="Changes" comment="git screenshots" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -237,7 +237,14 @@
       <option name="project" value="LOCAL" />
       <updated>1714900337966</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="git screenshots">
+      <created>1715054848518</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1715054848518</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -263,7 +270,8 @@
     <MESSAGE value="added some logic to char_lit() and string_lit()" />
     <MESSAGE value="created test class. &#10;wrote setUp()&#10;created test for constructor" />
     <MESSAGE value="wrote test for char_lit(), and string_lit()" />
-    <option name="LAST_COMMIT_MESSAGE" value="wrote test for char_lit(), and string_lit()" />
+    <MESSAGE value="git screenshots" />
+    <option name="LAST_COMMIT_MESSAGE" value="git screenshots" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>
