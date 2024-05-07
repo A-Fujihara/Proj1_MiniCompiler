@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a7ac25b6-265d-43ed-8230-0c6749f7127e" name="Changes" comment="more minor formatting" />
+    <list default="true" id="a7ac25b6-265d-43ed-8230-0c6749f7127e" name="Changes" comment="minor formatting in LexerTest.java">
+      <change beforePath="$PROJECT_DIR$/src/main/java/LexerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LexerTest.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -111,7 +113,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.LexerTest.test_string_lit">
     <configuration name="LexerTest" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
       <module name="MiniCompiler.main" />
       <option name="PACKAGE_NAME" value="" />
@@ -161,8 +163,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="LexerTest.test_string_lit" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="MiniCompiler.main" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="LexerTest" />
+      <option name="METHOD_NAME" value="test_string_lit" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.LexerTest.test_string_lit" />
         <item itemvalue="JUnit.LexerTest.div_or_comment" />
         <item itemvalue="JUnit.LexerTest.test_char_lit_valid" />
         <item itemvalue="JUnit.LexerTest.constructor" />
@@ -258,7 +271,35 @@
       <option name="project" value="LOCAL" />
       <updated>1715055133074</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="more minor formatting">
+      <created>1715057575112</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1715057575112</updated>
+    </task>
+    <task id="LOCAL-00013" summary="more minor formatting">
+      <created>1715058048754</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1715058048754</updated>
+    </task>
+    <task id="LOCAL-00014" summary="minor formatting in LexerTest.java">
+      <created>1715058302960</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1715058302960</updated>
+    </task>
+    <task id="LOCAL-00015" summary="minor formatting in LexerTest.java">
+      <created>1715058345140</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1715058345140</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -287,7 +328,8 @@
     <MESSAGE value="git screenshots" />
     <MESSAGE value="minor formatting" />
     <MESSAGE value="more minor formatting" />
-    <option name="LAST_COMMIT_MESSAGE" value="more minor formatting" />
+    <MESSAGE value="minor formatting in LexerTest.java" />
+    <option name="LAST_COMMIT_MESSAGE" value="minor formatting in LexerTest.java" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>
