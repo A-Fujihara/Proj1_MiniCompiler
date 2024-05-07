@@ -1,3 +1,12 @@
+// (5) Test methods provided for this class
+// 1. Constructor
+// 2. error()
+// 3. setUp()
+// 4. test_char_lit_valid()
+// 5. test_string_lit()
+// 6. test_div_or_comment()
+
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -76,7 +85,7 @@ class LexerTest {
     }
 
     @Test
-    void div_or_comment() {
+    void test_div_or_comment() {
         String testString = "'Compilers are Cool'";
         int line = 1;
         int pos = 1;
