@@ -464,10 +464,28 @@ public class Lexer {
                 throw new RuntimeException(e);
             }
 
+        } else if (fileName == "src/main/resources/hello3.lex") {
+            try {
+                FileWriter myWriter = new FileWriter("src/main/resources/hello3.lex");
+                myWriter.write(result);
+                myWriter.close();
+                System.out.println("Successfully wrote to the file.");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (fileName == "src/main/resources/hello4.lex") {
+            try {
+                FileWriter myWriter = new FileWriter("src/main/resources/hello4.lex");
+                myWriter.write(result);
+                myWriter.close();
+                System.out.println("Successfully wrote to the file.");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         } else {
             //this file writes to hello3.lex
             try {
-                FileWriter myWriter = new FileWriter("src/main/resources/hello3.lex");
+                FileWriter myWriter = new FileWriter("src/main/resources/hello5.lex");
                 myWriter.write(result);
                 myWriter.close();
                 System.out.println("Successfully wrote to the file.");
@@ -530,6 +548,40 @@ public class Lexer {
                 result = l.printTokens();
 
                 outputToFile(result, "src/main/resources/hello3.lex");
+                scanner3.close();
+
+            } catch (FileNotFoundException e) {
+                error(-1, -1, "Exception: " + e.getMessage());
+            }
+            try {
+                File file3 = new File("src/main/resources/AngelaFileRead1.lex");
+                Scanner scanner3 = new Scanner(file3);
+                String source = " ";
+                String result = " ";
+                while (scanner3.hasNext()) {
+                    source += scanner3.nextLine() + "\n";
+                }
+                Lexer l = new Lexer(source);
+                result = l.printTokens();
+
+                outputToFile(result, "src/main/resources/hello4.lex");
+                scanner3.close();
+
+            } catch (FileNotFoundException e) {
+                error(-1, -1, "Exception: " + e.getMessage());
+            }
+            try {
+                File file3 = new File("src/main/resources/AngelaFileRead2.lex");
+                Scanner scanner3 = new Scanner(file3);
+                String source = " ";
+                String result = " ";
+                while (scanner3.hasNext()) {
+                    source += scanner3.nextLine() + "\n";
+                }
+                Lexer l = new Lexer(source);
+                result = l.printTokens();
+
+                outputToFile(result, "src/main/resources/hello5.lex");
                 scanner3.close();
 
             } catch (FileNotFoundException e) {
