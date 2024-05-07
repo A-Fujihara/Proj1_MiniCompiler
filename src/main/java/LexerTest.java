@@ -33,7 +33,7 @@ class LexerTest {
 
     @Test
     void constructor() throws IOException {
-        String inputFilePath = "src/main/resources/99bottles.c"; // Update the file path as necessary
+        String inputFilePath = "src/main/resources/99bottles.c";
         String inputContent = Files.readString(Paths.get(inputFilePath));
 
         Lexer lexer = new Lexer(inputContent);
