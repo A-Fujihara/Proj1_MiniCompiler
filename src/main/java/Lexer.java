@@ -1,3 +1,8 @@
+/**
+ * Angela Fujihara
+ * Mini Compiler - Proj 1 --Lexer Class--
+ */
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -7,39 +12,94 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Lexer {
+    /**
+     * Stores line number of input be tokenized
+     */
     private int line;
+    /**
+     * Tracks position within line of input being tokenized
+     */
     private int pos;
+    /**
+     * Tracks position within Lexer constructoe
+     */
     private int position;
+    /**
+     * Stores a char
+     */
     private char chr;
     String s;
-
+    /**
+     * Hashmap that stores keywords.
+     */
     Map<String, TokenType> keywords = new HashMap<>();
 
+    /**
+     * Inner subclass for Tokens
+     */
     static class Token {
         public TokenType tokentype;
         public String value;
         public int line;
         public int pos;
 
+        /**
+         * A method to retrieve the type of Token
+         *
+         * @return - returns the type of the specific Token in question.
+         * Data tyoe returned is a TokenType
+         */
         public TokenType getTokentype() {
             return tokentype;
         }
 
+        /**
+         * Retrieves the value of the specific token in question
+         *
+         * @return - A String representation of the value of the Token
+         */
         public String getValue() {
             return value;
         }
 
+        /**
+         * The line number of the current position within the file being tokenized
+         *
+         * @return - An integer representation of the current line number
+         */
         public int getLine() {
             return line;
         }
 
+        /**
+         * Retrieves the current position with the current line in the file being tokenized
+         *
+         * @return - An integer representation of the current position within the current line
+         */
         public int getPos() {
             return pos;
         }
 
+        /**
+         * The Token constructor
+         *
+         * @param token - A variable that stores the type of the Token
+         * @param value - A String reprsentation of the value of the Token
+         * @param line
+         * @param pos
+         */
         Token(TokenType token, String value, int line, int pos) {
-            this.tokentype = token; this.value = value; this.line = line; this.pos = pos;
+            this.tokentype = token;
+            this.value = value;
+            this.line = line;
+            this.pos = pos;
         }
+
+        /**
+         * Method that provides String representations of the Class and its sub-Classes.
+         *
+         * @return - The requested String representation
+         */
         @Override
         public String toString() {
             String result = String.format("%5d  %5d %-15s", this.line, this.pos, this.tokentype);
@@ -58,14 +118,24 @@ public class Lexer {
         }
     }
 
+    /**
+     * Enumerated type to handle the various TokenTypes
+     */
     static enum TokenType {
-        End_of_input, Op_multiply,  Op_divide, Op_mod, Op_add, Op_subtract,
+        End_of_input, Op_multiply, Op_divide, Op_mod, Op_add, Op_subtract,
         Op_negate, Op_not, Op_less, Op_lessequal, Op_greater, Op_greaterequal,
         Op_equal, Op_notequal, Op_assign, Op_and, Op_or, Keyword_if,
         Keyword_else, Keyword_while, Keyword_print, Keyword_putc, LeftParen, RightParen,
         LeftBrace, RightBrace, Semicolon, Comma, Identifier, Integer, String,
     }
 
+    /**
+     * Method to provide error details in incorrect method handling wrong TokenType
+     *
+     * @param line - the line in the input where the error occurred
+     * @param pos  - the position within the line of the inout where the error occurred
+     * @param msg  - A message describing the error
+     */
     static void error(int line, int pos, String msg) {
         if (line > 0 && pos > 0) {
             System.out.printf("%s in line %d, pos %d\n", msg, line, pos);
@@ -75,6 +145,11 @@ public class Lexer {
         System.exit(1);
     }
 
+    /**
+     * Lexer Constructor
+     *
+     * @param source - the input to be tokenized
+     */
     Lexer(String source) {
         this.line = 1;
         this.pos = 0;
@@ -88,112 +163,141 @@ public class Lexer {
         this.keywords.put("while", TokenType.Keyword_while);
 
     }
+
+    /**
+     * A follow method to determine whether the character that follows the current
+     * char is expected or not
+     *
+     * @param expect - The character that is expected
+     * @param ifyes  - The TokenType to return if 'expect' parameter is True
+     * @param ifno   - The TokenType to return if 'expect' parameter is False
+     * @param line   - The location of the expected character
+     * @param pos    - The position of the expected character
+     * @return - A Token
+     */
     Token follow(char expect, TokenType ifyes, TokenType ifno, int line, int pos) {
         if (getNextChar() == expect) {
             getNextChar();
             return new Token(ifyes, "", line, pos);
         }
         if (ifno == TokenType.End_of_input) {
-            error(line, pos, String.format("follow: unrecognized character: (%d) '%c'", (int)this.chr, this.chr));
+            error(line, pos, String.format("follow: unrecognized character: (%d) '%c'", (int) this.chr, this.chr));
         }
         return new Token(ifno, "", line, pos);
     }
-    //TODO: Do more research regarding second return
+
+    /**
+     * @param line - The location of the char to be tokenized
+     * @param pos  - The position within the line of the char to be tokenized
+     * @return - The Token itself
+     */
     Token char_lit(int line, int pos) { // handle character literals
         getNextChar();
 
         if (!Character.isISOControl(chr) && chr != '\'') {
-            char c = chr; // Capture the character
-            getNextChar(); // Skip the character itself
+            char c = chr;
+            getNextChar();
 
-            // Check for closing quote
+            // check for closing single quote
             if (chr == '\'') {
                 return new Token(TokenType.Integer, String.valueOf(c), line, pos);
-//            } else {
-//                error(line, pos, "Invalid char literal");
-//                // Handle error: unmatched closing quote, could return an error token here
             }
         }
-
-
-        return new Token(TokenType.End_of_input, "", line, pos); // Placeholder for error handling
+        return new Token(TokenType.End_of_input, "", line, pos);
     }
 
+    /**
+     * A method that handles tokenizing of String literals
+     *
+     * @param start - A variable that holds quotes
+     * @param line  - The line of the input where the String begins
+     * @param pos   - The position within the line of the input where the String begins
+     * @return - A Token
+     */
+    Token string_lit(char start, int line, int pos) { // handle string literals
+        StringBuilder result = new StringBuilder();
+        // code here
+        char nextChar = getNextChar();
 
-//TODO: Continue fleshing out logic on while loop
-Token string_lit(char start, int line, int pos) { // handle string literals
-    StringBuilder result = new StringBuilder();
-    // code here
+        while (nextChar != start) {
+            result.append(nextChar);
+            nextChar = getNextChar();
+        }
 
-    char nextChar = getNextChar();
-    //result.append(start);
-
-    while (nextChar != start ) {
-        result.append(nextChar);
-        nextChar = getNextChar();
-//        if (nextChar == '"') {
-//        }
+        getNextChar();
+        return new Token(TokenType.String, result.toString(), line, pos);
     }
 
-    getNextChar();
-    return new Token(TokenType.String, result.toString(), line, pos);
-}
-
+    /**
+     * A method do determine whether a single / is a division symbol or the beginning of a comment
+     *
+     * @param line - The line where the first / can be found
+     * @param pos  - The position within the line where the first / can be found
+     * @return - A Token
+     */
     Token div_or_comment(int line, int pos) { // handle division or comments
-        char[] integers = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
-        StringBuilder sb = new StringBuilder();
-
-        for (char ints : integers) {
-            if (getNextChar() == ints) {
-                char nextChar = getNextChar();
-                if (nextChar == '\\') {
-                    char nextNextChar = getNextChar();
-                    sb.append(ints);
-                    sb.append(nextChar);
-                    if (nextNextChar == ints) {
-                        sb.append(nextNextChar);
-                        return new Token(TokenType.Op_divide, "", line, pos);
-                    }
-                } else if (nextChar == '*') {
-                    while (true) {
-                        char nextNextChar = getNextChar();
-                        if (nextNextChar == '*' && getNextChar() == '\\') {
-                            break;
-                        }
-                    }
-                }
+        char firstChar = getNextChar();
+        char secondChar = getNextChar();
+        char thirdChar;
+        if (firstChar == '*') {
+            while (secondChar != firstChar) {
+                secondChar = getNextChar();
             }
+
+            thirdChar = getNextChar();
+            if (thirdChar == '/') {
+                getToken();
+            }
+        } else if (firstChar == '/') {
+            while (secondChar != '\n') {
+                secondChar = getNextChar();
+            }
+            getToken();
         }
-            return getToken();
+        return new Token(TokenType.Op_divide, "/", line, pos);
     }
 
+
+    /**
+     * A method that determines whether input to be tokenized is an integer or identifier. And whether the
+     * identifier is a user generated variable or a language keyword
+     *
+     * @param line - The line within the input where the furst char of the value to be evaluated resides
+     * @param pos  - The position within the line
+     * @return - A Token
+     */
     Token identifier_or_integer(int line, int pos) { // handle identifiers and integers
         boolean is_number = true;
-        String text = "";
         // code here
-        StringBuilder result = new StringBuilder();
+        String result = "";
 
         if (Character.isDigit(chr)) {
 
             while (Character.isDigit(chr)) {
-                result.append(chr);
+                result += (chr);
                 getNextChar();
-
             }
-            return new Token(TokenType.Integer,  "", line, pos);
+
+            return new Token(TokenType.Integer, result, line, pos);
         } else if (Character.isLetter(chr)) {
             while (Character.isLetter(chr) || Character.isDigit(chr)) {
-                result.append(chr);
+                result += (chr);
                 getNextChar();
             }
-            return new Token(TokenType.Identifier, "", line, pos);
-        } else {
-            return new Token(TokenType.End_of_input, "Invalid String literal", line, pos);
+            if (keywords.containsKey(result)) {
+                return new Token(keywords.get(result), result, line, pos);
+            }
         }
+
+        return new Token(TokenType.Identifier, result, line, pos);
     }
 
-
-
+    /**
+     * A method to retrieve a Token with built-in switch case which determines method responsibility
+     * for tokenizing input
+     *
+     * @return - A Token
+     */
     Token getToken() {
         int line, pos;
         while (Character.isWhitespace(this.chr)) {
@@ -203,7 +307,6 @@ Token string_lit(char start, int line, int pos) { // handle string literals
         pos = this.pos;
 
         // switch statement on character for all forms of tokens with return to follow.... one example left for you
-
         switch (this.chr) {
             case '\u0000':
                 return new Token(TokenType.End_of_input, "", line, pos);
@@ -212,8 +315,7 @@ Token string_lit(char start, int line, int pos) { // handle string literals
                 getNextChar();
                 return new Token(TokenType.Op_multiply, "*", line, pos);
             case '/':
-                getNextChar();
-                return new Token(TokenType.Op_divide, "/", line, pos);
+                return div_or_comment(line, pos);
             case '%':
                 getNextChar();
                 return new Token(TokenType.Op_mod, "%", line, pos);
@@ -221,43 +323,53 @@ Token string_lit(char start, int line, int pos) { // handle string literals
                 getNextChar();
                 return new Token(TokenType.Op_add, "+", line, pos);
             case '-':
-                getNextChar();
-                return new Token(TokenType.Op_subtract, "-", line, pos);
+                char firstChar = getNextChar();
+                if (firstChar == ' ') {
+                    char secondChar = getNextChar();// char to be subtracted
+                    if (secondChar != ' ') {
+                        return new Token(TokenType.Op_subtract, "-", line, pos);
+                    }
+                } else if (firstChar != ' ') {
+                    return new Token(TokenType.Op_negate, "-", line, pos);
+                }
             case '!':
-                getNextChar();
-                return new Token(TokenType.Op_not, "!", line, pos);
+                if (getNextChar() == '=') {
+                    return new Token(TokenType.Op_notequal, "!=", line, pos);
+                } else {
+                    return new Token(TokenType.Op_not, "!", line, pos);
+                }
             case '<':
-                getNextChar();
-                return new Token(TokenType.Op_less, "<", line, pos);
-            case '\u2264':
-                getNextChar();
-                return new Token(TokenType.Op_lessequal, "≤", line, pos);
+                if (getNextChar() == '=') {
+                    return new Token(TokenType.Op_lessequal, "<=", line, pos);
+                } else {
+                    return new Token(TokenType.Op_less, "<", line, pos);
+                }
             case '>':
-                getNextChar();
-                return new Token(TokenType.Op_greater, ">", line, pos);
-            case '\u2265':
-                getNextChar();
-                return new Token(TokenType.Op_greaterequal, "≥", line, pos);
-            case '\u003D':
+                if (getNextChar() == '=') {
+                    return new Token(TokenType.Op_greaterequal, ">=", line, pos);
+                } else {
+                    return new Token(TokenType.Op_greater, ">", line, pos);
+                }
+            case '=':
                 getNextChar();
                 TokenType tokenType = follow('=', TokenType.Op_equal, TokenType.Op_assign, line, pos).tokentype;
-                if (tokenType == TokenType.Op_equal){
+                if (tokenType == TokenType.Op_equal) {
                     return new Token(tokenType, "==", line, pos);
-                }else {
+                } else {
                     return new Token(tokenType, "=", line, pos);
                 }
-
-
-
-            case '\u2260':
-                getNextChar();
-                return new Token(TokenType.Op_notequal, "≠", line, pos);
-            case '\u2229':
-                getNextChar();
-                return new Token(TokenType.Op_and, "∧", line, pos);
-            case '\u222A':
-                getNextChar();
-                return new Token(TokenType.Op_or, "∨", line, pos);
+            case '&':
+                if (getNextChar() == '&') {
+                    return new Token(TokenType.Op_and, "&&", line, pos);
+                } else {
+                    return new Token(TokenType.Identifier, "&", line, pos);
+                }
+            case '|':
+                if (getNextChar() == '|') {
+                    return new Token(TokenType.Op_or, "||", line, pos);
+                } else {
+                    return new Token(TokenType.Identifier, "|", line, pos);
+                }
             case '(':
                 getNextChar();
                 return new Token(TokenType.LeftParen, "(", line, pos);
@@ -280,16 +392,16 @@ Token string_lit(char start, int line, int pos) { // handle string literals
                 return string_lit('"', line, pos);
             case '\'':
                 return char_lit(line, pos);
-
-
-
-
-
             default:
                 return identifier_or_integer(line, pos);
         }
     }
 
+    /**
+     * Retrieves the next char from the input
+     *
+     * @return - The requested char
+     */
     char getNextChar() {
         this.pos++;
         this.position++;
@@ -305,6 +417,11 @@ Token string_lit(char start, int line, int pos) { // handle string literals
         return this.chr;
     }
 
+    /**
+     * A method to print requested Tokens
+     *
+     * @return - A String representation of the printed Tokens
+     */
     String printTokens() {
         Token t;
         StringBuilder sb = new StringBuilder();
@@ -318,38 +435,109 @@ Token string_lit(char start, int line, int pos) { // handle string literals
         return sb.toString();
     }
 
-    static void outputToFile(String result) {
-        try {
-            FileWriter myWriter = new FileWriter("src/main/resources/hello.lex");
-            myWriter.write(result);
-            myWriter.close();
-            System.out.println("Successfully wrote to the file.");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    /**
+     * A method to output Tokens to a file
+     *
+     * @param result
+     */
+    static void outputToFile(String result, String fileName) {
+
+        //this file writes to hello.lex
+        if (fileName == "src/main/resources/hello.lex") {
+            try {
+                FileWriter myWriter = new FileWriter(fileName);
+                myWriter.write(result);
+                myWriter.close();
+                System.out.println("Successfully wrote to the file.");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            //this file writes to hello2.lex
+        } else if (fileName == "src/main/resources/hello2.lex") {
+            try {
+                FileWriter myWriter = new FileWriter("src/main/resources/hello2.lex");
+                myWriter.write(result);
+                myWriter.close();
+                System.out.println("Successfully wrote to the file.");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+        } else {
+            //this file writes to hello3.lex
+            try {
+                FileWriter myWriter = new FileWriter("src/main/resources/hello3.lex");
+                myWriter.write(result);
+                myWriter.close();
+                System.out.println("Successfully wrote to the file.");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
+    /**
+     * main method
+     *
+     * @param args - A String array
+     */
     public static void main(String[] args) {
-        if (1==1) {
+        if (1 == 1) {
             try {
-
-                File f = new File("src/main/resources/count.c");
-                Scanner s = new Scanner(f);
+                File file1 = new File("src/main/resources/prime.c");
+                Scanner scanner1 = new Scanner(file1);
                 String source = " ";
                 String result = " ";
-                while (s.hasNext()) {
-                    source += s.nextLine() + "\n";
+                while (scanner1.hasNext()) {
+                    source += scanner1.nextLine() + "\n";
                 }
                 Lexer l = new Lexer(source);
                 result = l.printTokens();
 
-                outputToFile(result);
+                outputToFile(result, "src/main/resources/hello.lex");
+                scanner1.close();
 
-            } catch(FileNotFoundException e) {
+            } catch (FileNotFoundException e) {
+                error(-1, -1, "Exception: " + e.getMessage());
+            }
+            try {
+                File file2 = new File("src/main/resources/99bottles.c");
+                Scanner scanner2 = new Scanner(file2);
+                String source = " ";
+                String result = " ";
+                while (scanner2.hasNext()) {
+                    source += scanner2.nextLine() + "\n";
+                }
+                Lexer l = new Lexer(source);
+                result = l.printTokens();
+
+                outputToFile(result, "src/main/resources/hello2.lex");
+                scanner2.close();
+
+            } catch (FileNotFoundException e) {
+                error(-1, -1, "Exception: " + e.getMessage());
+            }
+            try {
+                File file3 = new File("src/main/resources/fizzbuzz.c");
+                Scanner scanner3 = new Scanner(file3);
+                String source = " ";
+                String result = " ";
+                while (scanner3.hasNext()) {
+                    source += scanner3.nextLine() + "\n";
+                }
+                Lexer l = new Lexer(source);
+                result = l.printTokens();
+
+                outputToFile(result, "src/main/resources/hello3.lex");
+                scanner3.close();
+
+            } catch (FileNotFoundException e) {
                 error(-1, -1, "Exception: " + e.getMessage());
             }
         } else {
             error(-1, -1, "No args");
         }
+
     }
 }

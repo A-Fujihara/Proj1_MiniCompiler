@@ -5,9 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a7ac25b6-265d-43ed-8230-0c6749f7127e" name="Changes" comment="wrote test for char_lit(), and string_lit()">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/hello2.lex" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/hello3.lex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Lexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Lexer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/LexerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LexerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/99bottles.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/99bottles.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/count.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/count.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/hello.lex" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hello.lex" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -116,10 +120,12 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Lexer">
-    <configuration name="Lexer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Lexer" />
+  <component name="RunManager">
+    <configuration name="LexerTest" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
       <module name="MiniCompiler.main" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="LexerTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -144,6 +150,16 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="LexerTest.error" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="MiniCompiler.main" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="LexerTest" />
+      <option name="METHOD_NAME" value="error" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="LexerTest.test_char_lit_valid" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="MiniCompiler.main" />
       <option name="PACKAGE_NAME" value="" />
@@ -154,23 +170,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="LexerTest.test_string_lit" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="MiniCompiler.main" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="LexerTest" />
-      <option name="METHOD_NAME" value="test_string_lit" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Lexer" />
         <item itemvalue="JUnit.LexerTest.div_or_comment" />
-        <item itemvalue="JUnit.LexerTest.constructor" />
         <item itemvalue="JUnit.LexerTest.test_char_lit_valid" />
-        <item itemvalue="JUnit.LexerTest.test_string_lit" />
+        <item itemvalue="JUnit.LexerTest.constructor" />
+        <item itemvalue="JUnit.LexerTest.error" />
       </list>
     </recent_temporary>
   </component>
@@ -270,15 +275,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="wrote test for char_lit(), and string_lit()" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Lexer.java</url>
-          <line>206</line>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="Lexer" memberName="position" />
@@ -288,5 +284,8 @@
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
     <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/MiniCompiler$LexerTest_error.ic" NAME="LexerTest.error Coverage Results" MODIFIED="1714983900048" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

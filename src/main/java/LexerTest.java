@@ -36,20 +36,19 @@ class LexerTest {
         String inputFilePath = "src/main/resources/99bottles.c"; // Update the file path as necessary
         String inputContent = Files.readString(Paths.get(inputFilePath));
 
-        // Create a new lexer instance with the input content
         Lexer lexer = new Lexer(inputContent);
 
-        // Verify that the lexer object is not null
         assertNotNull(lexer);
 
     }
     @Test
     void error() {
-//
+        assertNotEquals(8, lexer.getNextChar());
     }
 
     @Test
     void follow() {
+
     }
 
     @Test
@@ -58,7 +57,7 @@ class LexerTest {
         int line = 1;
         int pos = 1;
 
-        lexer.s = testString; // Put test string into Lexer (not ideal, but works for unit testing)
+        lexer.s = testString;
         Lexer.Token token = lexer.char_lit(line, pos);
 
         assertEquals(Lexer.TokenType.Integer, token.tokentype);
@@ -67,27 +66,13 @@ class LexerTest {
         assertEquals(pos, token.pos);
     }
 
-//    @Test
-//    void test_char_lit_invalid() {
-//        String testString = "aa";
-//        int line = 1;
-//        int pos = 1;
-//
-//        lexer.s = testString; // Put test string into Lexer (not ideal, but works for unit testing)
-//        Lexer.Token token = lexer.char_lit(line, pos);
-//
-//        assertNotEquals(Lexer.TokenType.Integer, token.tokentype);
-//        assertNotEquals("a", token.value);
-//        assertNotEquals(line, token.line);
-//        assertNotEquals(pos, token.pos);
-//    }
     @Test
     void test_string_lit() {
         String testString = "'Compilers are Cool'";
         int line = 1;
         int pos = 1;
 
-        lexer.s = testString; // Put test string into Lexer (not ideal, but works for unit testing)
+        lexer.s = testString;
         char start = '\'';
 
         Lexer.Token token = lexer.string_lit(start, line, pos);
@@ -104,7 +89,7 @@ class LexerTest {
         int line = 1;
         int pos = 1;
 
-        lexer.s = testString; // Put test string into Lexer (not ideal, but works for unit testing)
+        lexer.s = testString;
         char start = '\'';
 
         Lexer.Token token = lexer.string_lit(start, line, pos);
@@ -125,6 +110,7 @@ class LexerTest {
 
     @Test
     void getNextChar() {
+
     }
 
     @Test
