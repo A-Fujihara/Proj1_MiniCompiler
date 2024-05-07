@@ -7,12 +7,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class LexerTest {
-
     private File inputFile;
     private Lexer lexer;
 
@@ -24,7 +21,6 @@ class LexerTest {
 
         // Create a new lexer instance with the input content
         lexer = new Lexer(inputContent);
-
     }
 
     @AfterEach
@@ -35,12 +31,10 @@ class LexerTest {
     void constructor() throws IOException {
         String inputFilePath = "src/main/resources/99bottles.c";
         String inputContent = Files.readString(Paths.get(inputFilePath));
-
         Lexer lexer = new Lexer(inputContent);
-
         assertNotNull(lexer);
-
     }
+
     @Test
     void error() {
         assertNotEquals(8, lexer.getNextChar());
@@ -48,7 +42,6 @@ class LexerTest {
 
     @Test
     void follow() {
-
     }
 
     @Test
@@ -71,7 +64,6 @@ class LexerTest {
         String testString = "'Compilers are Cool'";
         int line = 1;
         int pos = 1;
-
         lexer.s = testString;
         char start = '\'';
 

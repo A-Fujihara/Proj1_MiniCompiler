@@ -52,7 +52,6 @@ public class Lexer {
         public TokenType getTokentype() {
             return tokentype;
         }
-
         /**
          * Retrieves the value of the specific token in question
          *
@@ -61,7 +60,6 @@ public class Lexer {
         public String getValue() {
             return value;
         }
-
         /**
          * The line number of the current position within the file being tokenized
          *
@@ -70,7 +68,6 @@ public class Lexer {
         public int getLine() {
             return line;
         }
-
         /**
          * Retrieves the current position with the current line in the file being tokenized
          *
@@ -79,7 +76,6 @@ public class Lexer {
         public int getPos() {
             return pos;
         }
-
         /**
          * The Token constructor
          *
@@ -94,7 +90,6 @@ public class Lexer {
             this.line = line;
             this.pos = pos;
         }
-
         /**
          * Method that provides String representations of the Class and its sub-Classes.
          *
@@ -117,7 +112,6 @@ public class Lexer {
             return result;
         }
     }
-
     /**
      * Enumerated type to handle the various TokenTypes
      */
@@ -128,7 +122,6 @@ public class Lexer {
         Keyword_else, Keyword_while, Keyword_print, Keyword_putc, LeftParen, RightParen,
         LeftBrace, RightBrace, Semicolon, Comma, Identifier, Integer, String,
     }
-
     /**
      * Method to provide error details in incorrect method handling wrong TokenType
      *
@@ -144,7 +137,6 @@ public class Lexer {
         }
         System.exit(1);
     }
-
     /**
      * Lexer Constructor
      *
@@ -161,9 +153,7 @@ public class Lexer {
         this.keywords.put("print", TokenType.Keyword_print);
         this.keywords.put("putc", TokenType.Keyword_putc);
         this.keywords.put("while", TokenType.Keyword_while);
-
     }
-
     /**
      * A follow method to determine whether the character that follows the current
      * char is expected or not
@@ -185,7 +175,6 @@ public class Lexer {
         }
         return new Token(ifno, "", line, pos);
     }
-
     /**
      * @param line - The location of the char to be tokenized
      * @param pos  - The position within the line of the char to be tokenized
@@ -205,7 +194,6 @@ public class Lexer {
         }
         return new Token(TokenType.End_of_input, "", line, pos);
     }
-
     /**
      * A method that handles tokenizing of String literals
      *
@@ -223,11 +211,9 @@ public class Lexer {
             result.append(nextChar);
             nextChar = getNextChar();
         }
-
         getNextChar();
         return new Token(TokenType.String, result.toString(), line, pos);
     }
-
     /**
      * A method do determine whether a single / is a division symbol or the beginning of a comment
      *
@@ -243,7 +229,6 @@ public class Lexer {
             while (secondChar != firstChar) {
                 secondChar = getNextChar();
             }
-
             thirdChar = getNextChar();
             if (thirdChar == '/') {
                 getToken();
@@ -256,8 +241,6 @@ public class Lexer {
         }
         return new Token(TokenType.Op_divide, "/", line, pos);
     }
-
-
     /**
      * A method that determines whether input to be tokenized is an integer or identifier. And whether the
      * identifier is a user generated variable or a language keyword
@@ -276,7 +259,6 @@ public class Lexer {
                 result += (chr);
                 getNextChar();
             }
-
             return new Token(TokenType.Integer, result, line, pos);
         } else if (Character.isLetter(chr)) {
             while (Character.isLetter(chr) || Character.isDigit(chr)) {
@@ -287,10 +269,8 @@ public class Lexer {
                 return new Token(keywords.get(result), result, line, pos);
             }
         }
-
         return new Token(TokenType.Identifier, result, line, pos);
     }
-
     /**
      * A method to retrieve a Token with built-in switch case which determines method responsibility
      * for tokenizing input
@@ -395,7 +375,6 @@ public class Lexer {
                 return identifier_or_integer(line, pos);
         }
     }
-
     /**
      * Retrieves the next char from the input
      *
@@ -415,7 +394,6 @@ public class Lexer {
         }
         return this.chr;
     }
-
     /**
      * A method to print requested Tokens
      *
@@ -433,7 +411,6 @@ public class Lexer {
         System.out.println(t);
         return sb.toString();
     }
-
     /**
      * A method to output Tokens to a file
      *
@@ -496,7 +473,6 @@ public class Lexer {
             }
         }
     }
-
     /**
      * main method
      *
@@ -592,6 +568,5 @@ public class Lexer {
         } else {
             error(-1, -1, "No args");
         }
-
     }
 }
