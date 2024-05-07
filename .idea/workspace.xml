@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a7ac25b6-265d-43ed-8230-0c6749f7127e" name="Changes" comment="git screenshots" />
+    <list default="true" id="a7ac25b6-265d-43ed-8230-0c6749f7127e" name="Changes" comment="more minor formatting" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -244,7 +244,21 @@
       <option name="project" value="LOCAL" />
       <updated>1715054848518</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="minor formatting">
+      <created>1715055075397</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1715055075397</updated>
+    </task>
+    <task id="LOCAL-00011" summary="more minor formatting">
+      <created>1715055133074</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1715055133074</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -271,7 +285,9 @@
     <MESSAGE value="created test class. &#10;wrote setUp()&#10;created test for constructor" />
     <MESSAGE value="wrote test for char_lit(), and string_lit()" />
     <MESSAGE value="git screenshots" />
-    <option name="LAST_COMMIT_MESSAGE" value="git screenshots" />
+    <MESSAGE value="minor formatting" />
+    <MESSAGE value="more minor formatting" />
+    <option name="LAST_COMMIT_MESSAGE" value="more minor formatting" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>
